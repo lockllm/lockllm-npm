@@ -1,0 +1,106 @@
+{
+  "name": "@lockllm/sdk",
+  "version": "1.0.0",
+  "description": "Enterprise-grade AI security SDK providing real-time protection against prompt injection, jailbreaks, and adversarial attacks. Drop-in replacement for OpenAI, Anthropic, and 15+ providers with zero code changes. Includes REST API, proxy mode, browser extension, and webhook support. Free BYOK model with unlimited scanning.",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./wrappers": {
+      "import": "./dist/wrappers/index.mjs",
+      "require": "./dist/wrappers/index.js",
+      "types": "./dist/wrappers/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "CODE_OF_CONDUCT.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "npm run build:cjs && npm run build:esm && npm run build:fix-extensions",
+    "build:cjs": "tsc",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:fix-extensions": "node -e \"const fs=require('fs');const path=require('path');function rename(dir){fs.readdirSync(dir,{withFileTypes:true}).forEach(f=>{const p=path.join(dir,f.name);if(f.isDirectory())rename(p);else if(f.name.endsWith('.js')){fs.renameSync(p,p.replace(/\\.js$/,'.mjs'));}})}rename('dist-esm');fs.cpSync('dist-esm',path.join('dist'),{recursive:true});fs.rmSync('dist-esm',{recursive:true,force:true});\"",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run typecheck && npm run test && npm run build"
+  },
+  "keywords": [
+    "openai",
+    "anthropic",
+    "chatgpt",
+    "claude",
+    "llm",
+    "ai",
+    "proxy",
+    "security",
+    "prompt-injection",
+    "jailbreak",
+    "openai-sdk",
+    "anthropic-sdk",
+    "ai-security",
+    "llm-security",
+    "prompt-security",
+    "openai-proxy",
+    "chatgpt-api",
+    "gpt-5",
+    "claude-api",
+    "langchain",
+    "ai-gateway",
+    "llm-firewall",
+    "rag",
+    "agents",
+    "typescript",
+    "production"
+  ],
+  "author": "LockLLM",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lockllm/lockllm-npm"
+  },
+  "homepage": "https://lockllm.com",
+  "peerDependencies": {
+    "@anthropic-ai/sdk": "^0.20.0",
+    "cohere-ai": "^7.0.0",
+    "openai": "^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "openai": {
+      "optional": true
+    },
+    "@anthropic-ai/sdk": {
+      "optional": true
+    },
+    "cohere-ai": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@anthropic-ai/sdk": "^0.71.2",
+    "@types/node": "^20.19.30",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vitest/coverage-v8": "^1.0.0",
+    "cohere-ai": "^7.20.0",
+    "eslint": "^8.0.0",
+    "openai": "^6.16.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.9.3",
+    "vitest": "^1.0.0"
+  }
+}
